@@ -2,6 +2,8 @@ package com.ichuvilin.discrodbot.commands.impl.music;
 
 import com.ichuvilin.discrodbot.commands.Command;
 import com.ichuvilin.discrodbot.lavaplayer.PlayerManager;
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import lombok.AllArgsConstructor;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Component;
 public class StopCommand extends ListenerAdapter implements Command {
 
     private final PlayerManager playerManager;
+    private final AudioPlayer audioPlayer;
 
     @Override
     public SlashCommandData getCommands() {
@@ -27,9 +30,10 @@ public class StopCommand extends ListenerAdapter implements Command {
         if (event.getName().equals("stop")) {
             var guildMusicManager = playerManager.getGuildMusicManager(event.getGuild());
             var trackScheduler = guildMusicManager.getTrackScheduler();
-            trackScheduler.getQueue().clear();
-            trackScheduler.nextTrack();
-            event.getGuild().getAudioManager().closeAudioConnection();
+            trackScheduler.onTrackEnd(audioPlayer, null, AudioTrackEndReason.STOPPED);
+//            trackScheduler.getQueue().clear();
+//            trackScheduler.nextTrack();
+//            event.getGuild().getAudioManager().closeAudioConnection();
             event.reply("Stopped").queue();
         }
     }

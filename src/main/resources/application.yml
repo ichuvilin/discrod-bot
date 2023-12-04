@@ -1,2 +1,6 @@
 bot:
   token: ${DISCORD_BOT_TOKEN}
+
+youtube:
+  email: ${YT_EMAIL}
+  password: ${YT_PASSWORD}

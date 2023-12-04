@@ -8,6 +8,7 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import lombok.extern.slf4j.Slf4j;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.springframework.stereotype.Component;
@@ -29,8 +30,8 @@ public class PlayerManager {
         AudioSourceManagers.registerLocalSource(audioPlayerManager);
     }
 
-    public GuildMusicManager getGuildMusicManager(Guild guild) {
-        return guildMusicManagers.computeIfAbsent(guild.getIdLong(), (guildId) -> {
+    public synchronized GuildMusicManager getGuildMusicManager(Guild guild) {
+        return guildMusicManagers.computeIfAbsent(guild.getIdLong(), guildId -> {
             GuildMusicManager musicManager = new GuildMusicManager(audioPlayerManager, guild);
 
             guild.getAudioManager().setSendingHandler(musicManager.getAudioForwarder());
@@ -44,16 +45,28 @@ public class PlayerManager {
         audioPlayerManager.loadItemOrdered(guildMusicManager, trackUrl, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
-                event.reply(String.format("Adding to queue [%s](%s)", track.getInfo().title, trackUrl)).queue();
+                var embedBuilder = new EmbedBuilder();
+                var empty = guildMusicManager.getTrackScheduler().isEmpty();
+                if (empty) {
+                    embedBuilder.setDescription(String.format("Started playing %s", track.getInfo().title));
+                } else {
+                    embedBuilder.setTitle("Adding track to queue");
+                    embedBuilder.addField("Track", track.getInfo().title, false);
+                    embedBuilder.addField("Track Length", String.valueOf(track.getInfo().length), false);
+                }
+
+
+                event.replyEmbeds(embedBuilder.build()).queue();
                 guildMusicManager.getTrackScheduler().queue(track);
             }
 
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
                 var tracks = playlist.getTracks();
-
-                event.reply(String.format("All tracks from the [%s](%s) are added to queue", playlist.getName(), trackUrl)).queue();
-
+                var embedBuilder = new EmbedBuilder();
+                embedBuilder.setTitle("Playlist");
+                embedBuilder.setDescription(String.format("Started playing %s", playlist.getName()));
+                event.replyEmbeds(embedBuilder.build()).queue();
                 for (var track :
                         tracks) {
                     guildMusicManager.getTrackScheduler().queue(track);
@@ -62,12 +75,12 @@ public class PlayerManager {
 
             @Override
             public void noMatches() {
-                event.reply("Nothing found by " + trackUrl).queue();
+                event.replyEmbeds(new EmbedBuilder().setDescription("Nothing found by " + trackUrl).build()).queue();
             }
 
             @Override
             public void loadFailed(FriendlyException exception) {
-                event.reply("Could not play: " + exception.getMessage()).queue();
+                event.replyEmbeds(new EmbedBuilder().setDescription("Could not play: " + exception.getMessage()).build()).queue();
             }
         });
     }
