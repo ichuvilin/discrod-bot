@@ -25,7 +25,8 @@ public class LavaPlayerConfig {
 
     @Bean
     public AudioPlayer audioPlayer() {
-        var playerManager = new DefaultAudioPlayerManager();
-        return playerManager.createPlayer();
+        var player = new DefaultAudioPlayerManager().createPlayer();
+        player.setVolume(100);
+        return player;
     }
 }
