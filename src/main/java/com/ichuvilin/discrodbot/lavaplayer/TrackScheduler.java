@@ -6,12 +6,10 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-@Component
 @RequiredArgsConstructor
 public class TrackScheduler extends AudioEventAdapter {
 
@@ -26,7 +24,7 @@ public class TrackScheduler extends AudioEventAdapter {
     }
 
     public boolean isEmpty() {
-        return queue.isEmpty();
+        return player.getPlayingTrack() == null && queue.isEmpty();
     }
 
     private void nextTrack() {
@@ -37,6 +35,8 @@ public class TrackScheduler extends AudioEventAdapter {
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
         if (endReason.mayStartNext) {
             nextTrack();
+        } else if (endReason.equals(AudioTrackEndReason.STOPPED)) {
+            player.stopTrack();
         }
     }
 }

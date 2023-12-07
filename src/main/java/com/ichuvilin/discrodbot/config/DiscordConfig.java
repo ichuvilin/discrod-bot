@@ -1,6 +1,7 @@
 package com.ichuvilin.discrodbot.config;
 
 import com.ichuvilin.discrodbot.commands.Command;
+import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.JDA;
@@ -20,7 +21,16 @@ public class DiscordConfig {
 
     @Value("${bot.token}")
     private final String token;
+    @Value("${youtube.email}")
+    private final String email;
+    @Value("${youtube.password}")
+    private final String password;
     private final List<Command> commands;
+
+    @Bean
+    public YoutubeAudioSourceManager youtubeAudioSourceManager() {
+        return new YoutubeAudioSourceManager(true, email, password);
+    }
 
     @Bean
     public JDA builder() {

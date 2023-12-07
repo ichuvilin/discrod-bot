@@ -2,7 +2,6 @@ package com.ichuvilin.discrodbot.commands.impl.music;
 
 import com.ichuvilin.discrodbot.commands.Command;
 import com.ichuvilin.discrodbot.lavaplayer.PlayerManager;
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import lombok.AllArgsConstructor;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class SkipCommand extends ListenerAdapter implements Command {
 
-    private final AudioPlayer audioPlayer;
     private final PlayerManager playerManager;
 
     @Override
@@ -29,6 +27,7 @@ public class SkipCommand extends ListenerAdapter implements Command {
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
         if (event.getName().equals("skip")) {
             var guildMusicManager = playerManager.getGuildMusicManager(event.getGuild());
+            var audioPlayer = guildMusicManager.getAudioForwarder().getAudioPlayer();
             guildMusicManager.getTrackScheduler().onTrackEnd(audioPlayer, null, AudioTrackEndReason.FINISHED);
             event.reply("Skipped").queue();
         }

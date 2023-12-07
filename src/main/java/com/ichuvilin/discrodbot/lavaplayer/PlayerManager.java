@@ -55,7 +55,6 @@ public class PlayerManager {
                     embedBuilder.addField("Track Length", String.valueOf(track.getInfo().length), false);
                 }
 
-
                 event.replyEmbeds(embedBuilder.build()).queue();
                 guildMusicManager.getTrackScheduler().queue(track);
             }

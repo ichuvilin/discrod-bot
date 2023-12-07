@@ -2,6 +2,7 @@ package com.ichuvilin.discrodbot.lavaplayer;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.playback.MutableAudioFrame;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.audio.AudioSendHandler;
 import net.dv8tion.jda.api.entities.Guild;
@@ -11,6 +12,7 @@ import java.nio.ByteBuffer;
 @Slf4j
 public class AudioPlayerSendHandler implements AudioSendHandler {
 
+    @Getter
     private final AudioPlayer audioPlayer;
     private final Guild guild;
     private final ByteBuffer buffer;
