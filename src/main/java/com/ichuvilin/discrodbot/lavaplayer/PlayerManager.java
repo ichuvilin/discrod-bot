@@ -51,8 +51,13 @@ public class PlayerManager {
                     embedBuilder.setDescription(String.format("Started playing %s", track.getInfo().title));
                 } else {
                     embedBuilder.setTitle("Adding track to queue");
+
+                    long songDurationInMillis = track.getInfo().length;
+                    long seconds = songDurationInMillis / 1000;
+                    long minutes = seconds / 60;
+                    
                     embedBuilder.addField("Track", track.getInfo().title, false);
-                    embedBuilder.addField("Track Length", String.valueOf(track.getInfo().length), false);
+                    embedBuilder.addField("Track Length", String.format("%d:%02d", minutes, seconds % 60), false);
                 }
 
                 event.replyEmbeds(embedBuilder.build()).queue();
