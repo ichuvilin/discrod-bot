@@ -54,5 +54,5 @@
 2. Подставьте свои данные в [docker-compose.yml](docker-compose.yml)
 3. Запуск приложения
    ```bash
-    docker-copmose up
+    docker-compose up
    ```
