@@ -6,6 +6,10 @@ services:
     container_name: "bot"
     ports:
       - "8080:8080"
+    environment:
+      - DISCORD_BOT_TOKEN=${TOKEN}
+      - YT_EMAIL=${EMAIL}
+      - YT_PASSWORD=${PASSWORD}
     networks:
       monitoring:
         aliases:
@@ -27,6 +31,7 @@ services:
   prometheus:
     image: prom/prometheus
     container_name: "prometheus"
+    user: root
     ports:
       - "9090:9090"
     volumes:

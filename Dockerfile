@@ -14,7 +14,7 @@ COPY --from=build ${JAR_FILE} /app/app.jar
 
 WORKDIR /app
 
-ENV DISCORD_BOT_TOKEN=tokne
+ENV DISCORD_BOT_TOKEN=token
 ENV YT_EMAIL=email
 ENV YT_PASSWORD=password
 
