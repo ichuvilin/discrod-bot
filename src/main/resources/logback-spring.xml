@@ -11,16 +11,6 @@
     </appender>
 
     <appender name="filebeatAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>./log/application.log</file>
-        <append>true</append>
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>./log/application.%d.%i.log.gz</fileNamePattern>
-            <maxFileSize>10MB</maxFileSize>
-        </rollingPolicy>
-    </appender>
-
-    <appender name="JsonRollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
 
         <file>${LOG_ROOT}/${LOG_FILE_NAME}.log</file>
         <append>true</append>
@@ -39,7 +29,6 @@
     <root level="info">
         <appender-ref ref="consoleAppender"/>
         <appender-ref ref="filebeatAppender"/>
-        <appender-ref ref="JsonRollingFile"/>
     </root>
 
 

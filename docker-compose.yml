@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: discrod-bot-bot:latest
+    image: discord-bot:latest
     container_name: "bot"
     ports:
       - "8080:8080"

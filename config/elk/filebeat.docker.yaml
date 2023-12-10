@@ -18,7 +18,7 @@ filebeat.autodiscover:
       templates:
         - condition:
             equals:
-              docker.container.image: discrod-bot-bot:latest
+              docker.container.image: discord-bot:latest
           config:
             - type: container
               multiline.type: pattern
