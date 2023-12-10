@@ -1,13 +1,14 @@
 package com.ichuvilin.discrodbot;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.Banner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
-@Slf4j
 @SpringBootApplication
 public class DiscordBotApplication {
     public static void main(String[] args) {
-        SpringApplication.run(DiscordBotApplication.class, args);
+        new SpringApplicationBuilder(DiscordBotApplication.class)
+                .bannerMode(Banner.Mode.OFF)
+                .run(args);
     }
 }

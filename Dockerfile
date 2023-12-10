@@ -1,5 +1,5 @@
 FROM gradle:8.5-jdk17 AS build
-
+LABEL authors="ichuvilin"
 
 COPY . /app
 
