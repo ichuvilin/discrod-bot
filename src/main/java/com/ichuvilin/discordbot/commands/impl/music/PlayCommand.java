@@ -1,7 +1,7 @@
-package com.ichuvilin.discrodbot.commands.impl.music;
+package com.ichuvilin.discordbot.commands.impl.music;
 
-import com.ichuvilin.discrodbot.commands.Command;
-import com.ichuvilin.discrodbot.lavaplayer.PlayerManager;
+import com.ichuvilin.discordbot.commands.Command;
+import com.ichuvilin.discordbot.lavaplayer.PlayerManager;
 import lombok.AllArgsConstructor;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;

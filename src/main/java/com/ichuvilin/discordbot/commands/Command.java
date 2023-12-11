@@ -1,4 +1,4 @@
-package com.ichuvilin.discrodbot.commands;
+package com.ichuvilin.discordbot.commands;
 
 import net.dv8tion.jda.api.hooks.EventListener;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;

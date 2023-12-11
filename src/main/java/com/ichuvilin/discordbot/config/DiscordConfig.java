@@ -1,6 +1,6 @@
-package com.ichuvilin.discrodbot.config;
+package com.ichuvilin.discordbot.config;
 
-import com.ichuvilin.discrodbot.commands.Command;
+import com.ichuvilin.discordbot.commands.Command;
 import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

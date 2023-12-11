@@ -1,4 +1,4 @@
-package com.ichuvilin.discrodbot.lavaplayer;
+package com.ichuvilin.discordbot.lavaplayer;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;

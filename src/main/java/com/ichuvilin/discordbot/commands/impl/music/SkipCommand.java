@@ -1,41 +1,35 @@
-package com.ichuvilin.discrodbot.commands.impl.music;
+package com.ichuvilin.discordbot.commands.impl.music;
 
-import com.ichuvilin.discrodbot.commands.Command;
-import com.ichuvilin.discrodbot.lavaplayer.PlayerManager;
+import com.ichuvilin.discordbot.commands.Command;
+import com.ichuvilin.discordbot.lavaplayer.PlayerManager;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import lombok.AllArgsConstructor;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.DiscordLocale;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class PauseCommand extends ListenerAdapter implements Command {
+public class SkipCommand extends ListenerAdapter implements Command {
 
     private final PlayerManager playerManager;
 
     @Override
     public SlashCommandData getCommands() {
-        return Commands.slash("pause", "pause the track or play it again");
+        return Commands.slash("skip", "skip the current song")
+                .setDescriptionLocalization(DiscordLocale.RUSSIAN, "пропускает текущий трек");
     }
 
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
-        if (event.getName().equals("pause")) {
+        if (event.getName().equals("skip")) {
             var guildMusicManager = playerManager.getGuildMusicManager(event.getGuild());
-            if (guildMusicManager == null) {
-                event.reply("You don't listen to music").queue();
-                return;
-            }
             var audioPlayer = guildMusicManager.getAudioForwarder().getAudioPlayer();
-            var paused = audioPlayer.isPaused();
-            audioPlayer.setPaused(!paused);
-            if (paused) {
-                event.reply("Playback paused").queue();
-            } else {
-                event.reply("Unpause playing").queue();
-            }
+            guildMusicManager.getTrackScheduler().onTrackEnd(audioPlayer, null, AudioTrackEndReason.FINISHED);
+            event.reply("Skipped").queue();
         }
     }
 }

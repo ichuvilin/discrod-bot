@@ -1,4 +1,4 @@
-package com.ichuvilin.discrodbot;
+package com.ichuvilin.discordbot;
 
 import org.springframework.boot.Banner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
