@@ -20,6 +20,7 @@ public class StopCommand extends ListenerAdapter implements Command {
     @Override
     public SlashCommandData getCommands() {
         return Commands.slash("stop", "stop the bot playing")
+                .setGuildOnly(true)
                 .setDescriptionLocalization(DiscordLocale.RUSSIAN, "останавливает воспроизведение");
     }
 

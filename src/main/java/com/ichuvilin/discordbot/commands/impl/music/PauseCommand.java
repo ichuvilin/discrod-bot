@@ -17,7 +17,8 @@ public class PauseCommand extends ListenerAdapter implements Command {
 
     @Override
     public SlashCommandData getCommands() {
-        return Commands.slash("pause", "pause the track or play it again");
+        return Commands.slash("pause", "pause the track or play it again")
+                .setGuildOnly(true);
     }
 
     @Override

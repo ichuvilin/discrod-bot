@@ -22,6 +22,7 @@ public class PlayCommand extends ListenerAdapter implements Command {
     @Override
     public SlashCommandData getCommands() {
         return Commands.slash("play", "play music in current voice channel")
+                .setGuildOnly(true)
                 .addOption(OptionType.STRING, "query", "link on music")
                 .setDescriptionLocalization(DiscordLocale.RUSSIAN, "воспроизвести музыку в текущем голосовом канале");
     }
@@ -29,11 +30,12 @@ public class PlayCommand extends ListenerAdapter implements Command {
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
         if (event.getName().equals("play")) {
+            event.deferReply().queue();
             var member = event.getMember();
             var voiceState = Objects.requireNonNull(member).getVoiceState();
 
             if (!Objects.requireNonNull(voiceState).inAudioChannel()) {
-                event.reply("You need to be in a voice channel").queue();
+                event.getHook().sendMessage("You need to be in a voice channel").queue();
                 return;
             }
 
@@ -44,7 +46,7 @@ public class PlayCommand extends ListenerAdapter implements Command {
                 event.getGuild().getAudioManager().openAudioConnection(voiceState.getChannel());
             } else {
                 if (selfVoice.getChannel() != voiceState.getChannel()) {
-                    event.reply("You need to be in the same channel as me").queue();
+                    event.getHook().sendMessage("You need to be in the same channel as me").queue();
                     return;
                 }
             }

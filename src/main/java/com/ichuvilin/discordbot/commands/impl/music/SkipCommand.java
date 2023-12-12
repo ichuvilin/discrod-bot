@@ -20,6 +20,7 @@ public class SkipCommand extends ListenerAdapter implements Command {
     @Override
     public SlashCommandData getCommands() {
         return Commands.slash("skip", "skip the current song")
+                .setGuildOnly(true)
                 .setDescriptionLocalization(DiscordLocale.RUSSIAN, "пропускает текущий трек");
     }
 

@@ -30,7 +30,7 @@ public class WishesCommand extends ListenerAdapter implements Command {
 
     @Override
     public SlashCommandData getCommands() {
-        return Commands.slash("wishes", "send suggestions for improving the bot");
+        return Commands.slash("wishes", "send suggestions for improving the bot").setGuildOnly(false);
     }
 
     @Override

@@ -25,6 +25,7 @@ public class QueueCommand extends ListenerAdapter implements Command {
     @Override
     public SlashCommandData getCommands() {
         return Commands.slash("queue", "view current track list")
+                .setGuildOnly(true)
                 .setDescriptionLocalization(DiscordLocale.RUSSIAN, "посмотреть текущий список треков");
     }
 
