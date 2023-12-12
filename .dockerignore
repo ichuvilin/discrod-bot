@@ -1,0 +1,9 @@
+.idea
+/log
+/build
+.gradle
+README.md
+docker-compose.yml
+/grafana
+/prometheus
+/config
